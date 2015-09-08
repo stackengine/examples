@@ -1,0 +1,10 @@
+# File location: sudo vim /etc/confd/conf.d/haproxy.toml
+
+[template]
+src = "nginx.conf.tmpl"
+dest = "/etc/nginx/nginx.conf"
+keys = [
+# These keys are mapped to service discovery in stackengine for an instance named "i1", running a couple of "hello" components
+"apps/i1-hello-80/containers",
+]
+reload_cmd = "/etc/init.d/nginx restart"

@@ -1,0 +1,9 @@
+# File location: sudo vim /etc/confd/conf.d/haproxy.toml
+
+[template]
+src = "haproxy.cfg.tmpl"
+dest = "/etc/haproxy/haproxy.cfg"
+keys = [
+"apps/i1-hello-80/containers",
+]
+reload_cmd = "/usr/sbin/service haproxy reload"

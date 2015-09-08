@@ -1,0 +1,32 @@
+# Typically lives in /etc/confd/templates/haproxy.cfg.tmpl
+
+global
+    daemon
+    maxconn 256
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+frontend localnodes
+    bind *:9099
+    mode http
+    default_backend nodes
+
+backend nodes
+    mode http
+    balance roundrobin
+    option httpchk HEAD / HTTP/1.1\r\nHost:localhost
+    # Iterate through all the keys from service discovery and place them in the format of "server <name> <ip> check" like you would in haproxy
+    {{range gets "/apps/i1-hello-80/containers/*"}}
+    server {{base .Key}} {{.Value}} check
+    {{end}}
+
+
+listen stats *:1936
+    stats enable
+    stats uri /haproxy?stats
+    stats hide-version
+    stats auth user:password
