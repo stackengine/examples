@@ -20,10 +20,8 @@ backend nodes
     balance roundrobin
     option httpchk HEAD / HTTP/1.1\r\nHost:localhost
     # Iterate through all the keys from service discovery and place them in the format of "server <name> <ip> check" like you would in haproxy
-    {{range gets "/apps/i1-hello-80/containers/*"}}
-    server {{base .Key}} {{.Value}} check
-    {{end}}
-
+    {{range gets "/*/*/*"}}
+    server {{base .Key}} {{.Value}} check{{end}}
 
 listen stats *:1936
     stats enable

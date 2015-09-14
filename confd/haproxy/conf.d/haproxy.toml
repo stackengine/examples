@@ -1,9 +1,10 @@
 # File location: sudo vim /etc/confd/conf.d/haproxy.toml
 
 [template]
+prefix = "apps"
 src = "haproxy.cfg.tmpl"
 dest = "/etc/haproxy/haproxy.cfg"
 keys = [
-"apps/i1-hello-80/containers",
+"perpool-wordpress-80",
 ]
 reload_cmd = "/usr/sbin/service haproxy reload"
